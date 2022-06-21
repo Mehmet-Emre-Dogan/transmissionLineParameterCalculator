@@ -49,6 +49,10 @@ class Ui_MainWindow(object):
 "}\n"
 "QMenu::item:selected {\n"
 "    color: cyan;\n"
+"}\n"
+"QToolTip{\n"
+"    background-color: whitesmoke;\n"
+"    color:black;\n"
 "}")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
