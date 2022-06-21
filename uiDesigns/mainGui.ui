@@ -48,6 +48,10 @@ QMenuBar::item:selected{
 }
 QMenu::item:selected {
 	color: cyan;
+}
+QToolTip{
+	background-color: whitesmoke;
+	color:black;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
