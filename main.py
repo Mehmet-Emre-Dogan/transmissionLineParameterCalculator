@@ -1,18 +1,15 @@
 import sys
 import os
 import re
-from unittest import case
-from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtCore import QThread, pyqtSignal
-from PyQt5 import QtCore 
-from PyQt5 import QtGui
 
+from matplotlib.pyplot import text
+
+from common import *
 import calculate
+import create
 
 
 from guiFiles.mainGui import Ui_MainWindow as mainMainWindow
-from guiFiles.creatorGui import Ui_MainWindow as creatorMainWindow
 
 DEBUG = True
 DEFAULT_CBOX_TEXT = "Select Dataset"
@@ -30,7 +27,6 @@ def getExtensionsOnly(arr:list, ext:str) -> list:
 
 
 class myWindow(QtWidgets.QMainWindow):
-    keyPressed = QtCore.pyqtSignal(QtCore.QEvent)
     def __init__(self):
         super(myWindow, self).__init__()
         self.ui = mainMainWindow()
@@ -82,6 +78,11 @@ class myWindow(QtWidgets.QMainWindow):
         self.ui.lbl_r.setText(str(res["R"]) + " Ω")
         self.ui.lbl_x.setText(str(res["X_L"]) + " Ω")
         self.ui.lbl_b.setText(str(res["B_C"]) + " S")
+
+    def makefile(self):
+        self.creatorWindow = create.creatorWindow()
+        self.creatorWindow.show()
+        self.creatorWindow.sigCreated.connect(self.loadCbox)
 
 
             

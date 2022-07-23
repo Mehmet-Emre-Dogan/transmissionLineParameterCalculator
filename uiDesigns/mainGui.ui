@@ -333,7 +333,7 @@ QToolTip{
   </action>
   <action name="actionMake_F_le">
    <property name="text">
-    <string>Make Fİle</string>
+    <string>Make File</string>
    </property>
   </action>
   <action name="actionDisplay_online_documentation">
