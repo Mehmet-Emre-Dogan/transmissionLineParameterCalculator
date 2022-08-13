@@ -1,32 +1,12 @@
-import sys
-import os
-import re
-
-from matplotlib.pyplot import text
-
 from common import *
 import calculate
 import create
 
-
 from guiFiles.mainGui import Ui_MainWindow as mainMainWindow
-
-DEBUG = True
-DEFAULT_CBOX_TEXT = "Select Dataset"
 
 currDirectory = os.path.dirname(__file__)
 
-# https://stackoverflow.com/questions/4836710/is-there-a-built-in-function-for-string-natural-sort
-def naturalSort(arr: list) -> list: 
-    convert = lambda text: int(text) if text.isdigit() else text.lower()
-    alphanum_key = lambda key: [convert(c) for c in re.split('([0-9]+)', key)]
-    return sorted(arr, key=alphanum_key)
-
-def getExtensionsOnly(arr:list, ext:str) -> list:
-    return [item for item in arr if str(item).endswith(ext)]
-
-
-class myWindow(QtWidgets.QMainWindow):
+class myWindow(myWindowSkeleton):
     def __init__(self):
         super(myWindow, self).__init__()
         self.ui = mainMainWindow()
@@ -56,7 +36,7 @@ class myWindow(QtWidgets.QMainWindow):
 
     def loadCbox(self, selectedText=DEFAULT_CBOX_TEXT):
         self.ui.comboBox.clear() 
-        files = os.listdir(currDirectory)
+        files = os.listdir(currDirectory + "\\userdata")
         if DEBUG:
             print(files)
         files = getExtensionsOnly(files, ".json")
@@ -71,13 +51,26 @@ class myWindow(QtWidgets.QMainWindow):
     def calc(self):
         if self.ui.comboBox.currentText() == DEFAULT_CBOX_TEXT:
             return # do not calculate, exit immediately
-        res = calculate.calculate(self.ui.comboBox.currentText())
-        self.ui.rpu.setText(str(res["R_pu"]) + " pu")
-        self.ui.xpu.setText(str(res["X_pu"]) + " pu")
-        self.ui.bpu.setText(str(res["B_pu"]) + " pu")
-        self.ui.lbl_r.setText(str(res["R"]) + " Ω")
-        self.ui.lbl_x.setText(str(res["X_L"]) + " Ω")
-        self.ui.lbl_b.setText(str(res["B_C"]) + " S")
+
+        try:
+            res = calculate.calculate(currDirectory + "\\userdata\\" + self.ui.comboBox.currentText())
+        except ZeroDivisionError as zde:
+            zde = str(zde)
+            self.ui.rpu.setText(zde)
+            self.ui.xpu.setText(zde)
+            self.ui.bpu.setText(zde)
+            self.ui.lbl_r.setText(zde)
+            self.ui.lbl_x.setText(zde)
+            self.ui.lbl_b.setText(zde)
+            self.errorMessage("Zero division error!", "Division by zero occured while calculating")
+
+        else:
+            self.ui.rpu.setText(str(res["R_pu"]) + " pu")
+            self.ui.xpu.setText(str(res["X_pu"]) + " pu")
+            self.ui.bpu.setText(str(res["B_pu"]) + " pu")
+            self.ui.lbl_r.setText(str(res["R"]) + " Ω")
+            self.ui.lbl_x.setText(str(res["X_L"]) + " Ω")
+            self.ui.lbl_b.setText(str(res["B_C"]) + " S")
 
     def makefile(self):
         self.creatorWindow = create.creatorWindow()

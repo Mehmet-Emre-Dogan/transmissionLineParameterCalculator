@@ -1,9 +1,15 @@
 import math
 import numpy as np
 import re
+from statistics import StatisticsError, geometric_mean 
 
 DEBUG = False
 ################### FUNCTIONS ###################
+def geomean(arr):
+    try: 
+        return geometric_mean(arr)
+    except StatisticsError:
+        return 0
 
 def symmetryWrtX(arr):
     if len(arr) != 2:

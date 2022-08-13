@@ -60,7 +60,7 @@ QToolTip{
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_3">
+   <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <layout class="QGridLayout" name="grid1">
       <item row="3" column="0">
@@ -341,6 +341,19 @@ QToolTip{
        </widget>
       </item>
      </layout>
+    </item>
+    <item row="0" column="1">
+     <spacer name="horizontalSpacer_7">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
     </item>
     <item row="0" column="2">
      <layout class="QGridLayout" name="grid2">
@@ -739,7 +752,7 @@ QToolTip{
            </font>
           </property>
           <property name="text">
-           <string>x coordinate</string>
+           <string>x coordinate (m)</string>
           </property>
          </widget>
         </item>
@@ -777,7 +790,7 @@ QToolTip{
            </font>
           </property>
           <property name="text">
-           <string>y coordinate</string>
+           <string>y coordinate (m)</string>
           </property>
          </widget>
         </item>
@@ -798,18 +811,62 @@ QToolTip{
       </item>
      </layout>
     </item>
-    <item row="0" column="1">
-     <spacer name="horizontalSpacer_7">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
+    <item row="1" column="0">
+     <layout class="QFormLayout" name="formLayout_2">
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="lineEditFileName">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string>Leave empty for timestamped filename</string>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="lblFilename">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Filename</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lblFilenToInherit">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Inherit From:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="comboBoxFilesToInherit">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <item>
+         <property name="text">
+          <string>Create New</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item row="1" column="2">
      <layout class="QHBoxLayout" name="horizontalLayout">
@@ -853,37 +910,6 @@ QToolTip{
          </size>
         </property>
        </spacer>
-      </item>
-     </layout>
-    </item>
-    <item row="1" column="0">
-     <layout class="QFormLayout" name="formLayout_2">
-      <item row="0" column="0">
-       <widget class="QLabel" name="lblFilename">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Filename</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEditFileName">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="toolTip">
-         <string>Leave empty for timestamped filename</string>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-       </widget>
       </item>
      </layout>
     </item>

@@ -1,6 +1,5 @@
 import numpy as np
 import sympy.physics.units as u
-from statistics import geometric_mean as geomean
 from math import log
 from math import pi
 import csv
