@@ -1,46 +1,80 @@
+from tokenize import Double
 from common import *
 from guiFiles.txtToJsonGui import Ui_MainWindow as txt2jsonWind
 
-class txt2jsonWindow(QtWidgets.QMainWindow):
+class txt2jsonWindow(myWindowSkeleton):
     sigCreated = pyqtSignal(str)
     def __init__(self):
         super(txt2jsonWindow, self).__init__()
         self.ui = txt2jsonWind()
         self.ui.setupUi(self)
         self.setWindowIcon(QtGui.QIcon('img.png'))
+        self.ui.btnRefresh.clicked.connect(self.loadCbox)
+        self.ui.btnConvert.clicked.connect(self.save)
+        self.loadCbox()
         
     def save(self):
+        pass
 
-        self.sigCreated.emit("data1.json")
-    def save(self):
-        if not self.ui.lineEditFileName.text():
-            customDT = datetime.datetime.now().strftime('%Y-%m-%d_%H.%M.%S')
-            self.ui.lineEditFileName.setText("TL_" + customDT + ".json")            
-        
-        filepath = currDirectory + "\\userdata\\" + self.ui.lineEditFileName.text()
-        dataDict = {
-            "Sbase (MVA)": self.ui.doubleSpinBoxSbase.value(),
-            "Vbase (kV)": self.ui.doubleSpinBoxVbase.value(),
-            "Number of circuits": int(self.ui.comboBoxNccts.currentText()),
-            "Number of bundle conductors per phase": self.ui.spinBoxBundleCou.value(),
-            "Bundle distance (m)": self.ui.doubleSpinBundleDistance.value(),
-            "Length of the line (km)": self.ui.doubleSpinLineLength.value(),
-            "ACSR conductor name": self.ui.comboBoxConductorName.currentText(),
-            "C1 Phase A (centre)": [self.ui.doubleSpinBoxA1x.value(), self.ui.doubleSpinBoxA1y.value()],
-            "C1 Phase B (centre)": [self.ui.doubleSpinBoxB1x.value(), self.ui.doubleSpinBoxB1y.value()],
-            "C1 Phase C (centre)": [self.ui.doubleSpinBoxC1x.value(), self.ui.doubleSpinBoxC1y.value()],
-            "C2 Phase A (centre)": [self.ui.doubleSpinBoxA2x.value(), self.ui.doubleSpinBoxA2y.value()],
-            "C2 Phase B (centre)": [self.ui.doubleSpinBoxB2x.value(), self.ui.doubleSpinBoxB2y.value()],
-            "C2 Phase C (centre)": [self.ui.doubleSpinBoxC2x.value(), self.ui.doubleSpinBoxC2y.value()],
-        }
-
+    def loadCbox(self, selectedText=DEFAULT_CBOX_TEXT):
+        self.ui.comboBox.clear() 
+        files = os.listdir(currDirectory + "\\userdata")
+        if DEBUG:
+            print(files)
+        files = getExtensionsOnly(files, ".txt")
+        files = naturalSort(files)
+        files.insert(0, DEFAULT_CBOX_TEXT)
+        self.ui.comboBox.addItems(files)
         try:
-            dumpDict(dataDict, filepath=filepath)
+            self.ui.comboBox.setCurrentIndex(files.index(selectedText))
+        except ValueError: # pass if the selected text is not in cbox
+            pass
+
+        
+    def save(self):         
+        filenameIn = self.ui.comboBox.currentText()
+        filepathIn = currDirectory + "\\userdata\\" + filenameIn
+        cleanFilename = filenameIn.split("."); cleanFilename.pop(-1); 
+        filenameOut = "".join(cleanFilename) + ".json" # Convert the filename.anything to filename.json
+        filepathOut = currDirectory + "\\userdata\\" + filenameOut
+        try:
+            with open(filepathIn, "r", encoding="UTF-8") as fptr:
+                lines =  fptr.readlines()
+        except Exception as ex:
+            self.errorMessage("An error occurd during file reading!", str(ex))
+            return
+        
+        try:
+            noc = int(lines[5])     
+            dataDict = {
+                "Sbase (MVA)": float(lines[1]),
+                "Vbase (kV)": float(lines[3]),
+                "Number of circuits": int(lines[5])  ,
+                "Number of bundle conductors per phase": int(lines[7]),
+                "Bundle distance (m)": float(lines[9]),
+                "Length of the line (km)": float(lines[11]),
+                "ACSR conductor name": lines[13],
+                "C1 Phase C (centre)": [float(lines[15]), float(lines[16])],
+                "C1 Phase A (centre)": [float(lines[18]), float(lines[19])],
+                "C1 Phase B (centre)": [float(lines[21]), float(lines[22])],
+            }
+            if noc == 2:
+                dataDict.update({
+                "C2 Phase C (centre)": [float(lines[24]), float(lines[25])],
+                "C2 Phase A (centre)": [float(lines[27]), float(lines[28])],
+                "C2 Phase B (centre)": [float(lines[30]), float(lines[31])],
+                })
+        except Exception as ex:
+            self.errorMessage("Invalid file detected!", str(ex))
+            return
+        
+        try:
+            dumpDict(dataDict, filepath=filepathOut)
         except (Exception, OSError, FileNotFoundError) as ex:
             self.errorMessage(text=str(ex))
         else:
-            self.infoMessage("Success", f"Transmission line parameters saved successfully to file {filepath}")
-            self.sigCreated.emit("data1.json")
+            self.infoMessage("Success", f"{filepathIn} saved successfully to file {filepathOut}")
+            self.sigCreated.emit(filepathOut)
 def app():
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle('Fusion')
