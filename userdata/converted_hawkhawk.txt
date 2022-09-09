@@ -1,0 +1,33 @@
+Sbase (MVA)
+11.0
+Vbase (kV)
+10.0
+Number of circuits
+2
+Number of bundle conductors per phase
+11
+Bundle distance (m)
+0.24500000000000013
+Length of the line (km)
+22.0
+ACSR conductor name
+Hawk
+C1 Phase C (centre)
+1.25
+1.5
+C1 Phase A (centre)
+2.75
+1.5
+C1 Phase B (centre)
+1.5
+1.5
+C2 Phase C (centre)
+2.75
+2.5
+C2 Phase A (centre)
+1.75
+2.5
+C2 Phase B (centre)
+2.5
+3.5
+-999

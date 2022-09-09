@@ -2,6 +2,7 @@ from common import *
 import calculate
 import create
 import txt2json
+import json2txt
 
 from guiFiles.mainGui import Ui_MainWindow as mainMainWindow
 
@@ -35,6 +36,8 @@ class myWindow(myWindowSkeleton):
                 self.makefile()
             case "Txt to json":
                 self.txt2json()
+            case "Json to txt":
+                self.json2txt()
             case "Online documentation":
                 self.showHelpOnline()
             case "Offline help":
@@ -93,6 +96,9 @@ class myWindow(myWindowSkeleton):
         self.txt2jsonWindow.sigCreated.connect(self.loadCbox)
         self.txt2jsonWindow.sigCreated.connect(self.calc)
 
+    def json2txt(self):
+        self.json2txtWindow = json2txt.json2txtWindow()
+        self.json2txtWindow.show()
 
     ################################
     """Help displayers"""
