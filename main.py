@@ -35,6 +35,10 @@ class myWindow(myWindowSkeleton):
                 self.makefile()
             case "Txt to json":
                 self.txt2json()
+            case "Online documentation":
+                self.showHelpOnline()
+            case "Offline help":
+                self.showHelpOffline()
 
     def loadCbox(self, selectedText=DEFAULT_CBOX_TEXT):
         print("hi")
@@ -88,6 +92,30 @@ class myWindow(myWindowSkeleton):
         self.txt2jsonWindow.show()
         self.txt2jsonWindow.sigCreated.connect(self.loadCbox)
         self.txt2jsonWindow.sigCreated.connect(self.calc)
+
+
+    ################################
+    """Help displayers"""
+    ################################
+
+    def showHelpOnline(self, lang="EN"):
+        if lang == "TR":
+            os.system('start https://github.com/Mehmet-Emre-Dogan/transmissionLineParameterCalculator/blob/main/BEN%C4%B0OKU.md')
+        else:
+           os.system('start https://github.com/Mehmet-Emre-Dogan/transmissionLineParameterCalculator/blob/main/README.md')
+
+    def showHelpOffline(self, lang="EN"):
+        try:
+            if lang == "TR":
+                os.system(f'start notepad.exe "{currDirectory}\\benioku.txt"')
+            else:
+                os.system(f'start notepad.exe "{currDirectory}\\readme.txt"')
+        except (Exception, OSError, FileNotFoundError) as err:
+            if lang == "TR":
+                self.errorMessage(title="Çevrimdışı yardım görüntülenemiyor", text="'benioku.txt' dosyasını sildiniz mi?")
+            else:
+                self.errorMessage(title="Unable to show offline help", text="Did you deleted 'readme.txt' file?")
+
 
 
 def app():
