@@ -74,12 +74,12 @@ class myWindow(myWindowSkeleton):
             self.errorMessage(str(fnfe))
 
         else:
-            self.ui.rpu.setText(str(res["R_pu"]) + " pu")
-            self.ui.xpu.setText(str(res["X_pu"]) + " pu")
-            self.ui.bpu.setText(str(res["B_pu"]) + " pu")
-            self.ui.lbl_r.setText(str(res["R"]) + " Ω")
-            self.ui.lbl_x.setText(str(res["X_L"]) + " Ω")
-            self.ui.lbl_b.setText(str(res["B_C"]) + " S")
+            self.ui.rpu.setText("R_pu: " + str(res["R_pu"]) + " pu")
+            self.ui.xpu.setText("X_pu: " + str(res["X_pu"]) + " pu")
+            self.ui.bpu.setText("B_pu: " + str(res["B_pu"]) + " pu")
+            self.ui.lbl_r.setText("R: " + str(res["R"]) + " Ω")
+            self.ui.lbl_x.setText("X_L: " + str(res["X_L"]) + " Ω")
+            self.ui.lbl_b.setText("B_C: " + str(res["B_C"]) + " S")
 
     def makefile(self):
         self.creatorWindow = create.creatorWindow()
