@@ -60,24 +60,28 @@ class creatorWindow(myWindowSkeleton):
 
         # https://stackoverflow.com/questions/7479915/getting-all-items-of-qcombobox-pyqt4-python
         setattr(self.ui.comboBoxConductorName, "allItems", lambda: [self.ui.comboBoxConductorName.itemText(i) for i in range(self.ui.comboBoxConductorName.count())])
-        print(self.ui.comboBoxConductorName.allItems())
-
-            # "": value(),
-            # "ACSR conductor name": self.ui.comboBoxConductorName.currentText(),
-            # "C1 Phase A (centre)": [self.ui.doubleSpinBoxA1x.value(), self.ui.doubleSpinBoxA1y.value()],
-            # "C1 Phase B (centre)": [self.ui.doubleSpinBoxB1x.value(), self.ui.doubleSpinBoxB1y.value()],
-            # "C1 Phase C (centre)": [self.ui.doubleSpinBoxC1x.value(), self.ui.doubleSpinBoxC1y.value()],
-            # "C2 Phase A (centre)": [self.ui.doubleSpinBoxA2x.value(), self.ui.doubleSpinBoxA2y.value()],
-            # "C2 Phase B (centre)": [self.ui.doubleSpinBoxB2x.value(), self.ui.doubleSpinBoxB2y.value()],
-            # "C2 Phase C (centre)": [self.ui.doubleSpinBoxC2x.value(), self.ui.doubleSpinBoxC2y.value()],   
-
+        # print(self.ui.comboBoxConductorName.allItems())
+        self.ui.comboBoxConductorName.setCurrentIndex(self.ui.comboBoxConductorName.allItems().index(datadict["ACSR conductor name"]))
+        self.ui.doubleSpinBoxA1x.setValue(datadict["C1 Phase A (centre)"][0])
+        self.ui.doubleSpinBoxA1y.setValue(datadict["C1 Phase A (centre)"][1])
+        self.ui.doubleSpinBoxB1x.setValue(datadict["C1 Phase B (centre)"][0])
+        self.ui.doubleSpinBoxB1y.setValue(datadict["C1 Phase B (centre)"][1])
+        self.ui.doubleSpinBoxC1x.setValue(datadict["C1 Phase C (centre)"][0])
+        self.ui.doubleSpinBoxC1y.setValue(datadict["C1 Phase C (centre)"][1])
+        self.ui.doubleSpinBoxA2x.setValue(datadict["C2 Phase A (centre)"][0])
+        self.ui.doubleSpinBoxA2y.setValue(datadict["C2 Phase A (centre)"][1])
+        self.ui.doubleSpinBoxB2x.setValue(datadict["C2 Phase B (centre)"][0])
+        self.ui.doubleSpinBoxB2y.setValue(datadict["C2 Phase B (centre)"][1])
+        self.ui.doubleSpinBoxC2x.setValue(datadict["C2 Phase C (centre)"][0])
+        self.ui.doubleSpinBoxC2y.setValue(datadict["C2 Phase C (centre)"][1])
 
     def save(self):
         if not self.ui.lineEditFileName.text():
             customDT = datetime.datetime.now().strftime('%Y-%m-%d_%H.%M.%S')
-            self.ui.lineEditFileName.setText("TL_" + customDT + ".json")            
-        
-        filepath = currDirectory + "\\userdata\\" + self.ui.lineEditFileName.text()
+            self.ui.lineEditFileName.setText("TL_" + customDT + ".json")      
+
+        filename = self.ui.lineEditFileName.text()
+        filepath = currDirectory + "\\userdata\\" + filename
         dataDict = {
             "Sbase (MVA)": self.ui.doubleSpinBoxSbase.value(),
             "Vbase (kV)": self.ui.doubleSpinBoxVbase.value(),
@@ -100,7 +104,7 @@ class creatorWindow(myWindowSkeleton):
             self.errorMessage(text=str(ex))
         else:
             self.infoMessage("Success", f"Transmission line parameters saved successfully to file {filepath}")
-            self.sigCreated.emit("data1.json")
+            self.sigCreated.emit(filename)
 
 
     def loadCboxFilesToInherit(self, selectedText="Create New"):

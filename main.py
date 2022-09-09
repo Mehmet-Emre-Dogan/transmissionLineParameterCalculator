@@ -1,6 +1,7 @@
 from common import *
 import calculate
 import create
+import txt2json
 
 from guiFiles.mainGui import Ui_MainWindow as mainMainWindow
 
@@ -18,6 +19,7 @@ class myWindow(myWindowSkeleton):
         # https://zetcode.com/gui/pyqt5/menustoolbars/
         self.ui.menubar.triggered.connect(self.whoGotSelected)
         self.ui.comboBox.activated.connect(self.calc)
+        # self.ui.comboBox.currentIndexChanged.connect(self.calc)
         self.ui.btnRefresh.clicked.connect(self.loadCbox)
 
         self.loadCbox()
@@ -35,6 +37,7 @@ class myWindow(myWindowSkeleton):
                 self.txt2json()
 
     def loadCbox(self, selectedText=DEFAULT_CBOX_TEXT):
+        print("hi")
         self.ui.comboBox.clear() 
         files = os.listdir(currDirectory + "\\userdata")
         if DEBUG:
@@ -63,6 +66,8 @@ class myWindow(myWindowSkeleton):
             self.ui.lbl_x.setText(zde)
             self.ui.lbl_b.setText(zde)
             self.errorMessage("Zero division error!", "Division by zero occured while calculating")
+        except FileNotFoundError as fnfe:
+            self.errorMessage(str(fnfe))
 
         else:
             self.ui.rpu.setText(str(res["R_pu"]) + " pu")
@@ -76,6 +81,12 @@ class myWindow(myWindowSkeleton):
         self.creatorWindow = create.creatorWindow()
         self.creatorWindow.show()
         self.creatorWindow.sigCreated.connect(self.loadCbox)
+        self.creatorWindow.sigCreated.connect(self.calc)
+
+    def txt2json(self):
+        self.txt2jsonWindow = txt2json.txt2jsonWindow()
+        self.txt2jsonWindow.show()
+        self.txt2jsonWindow.sigCreated.connect(self.loadCbox)
 
 
             
