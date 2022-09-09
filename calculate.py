@@ -53,10 +53,9 @@ def calculate(dataPath: str):
     a1 = np.array(dataDict["C1 Phase A (centre)"])
     b1 = np.array(dataDict["C1 Phase B (centre)"])
     c1 = np.array(dataDict["C1 Phase C (centre)"])
+    # i need to add if else here. but guess what, i had already added it.
+    # so i cut the code here and pasted it to the beginning of elif case ncct == 2
 
-    a2 = np.array(dataDict["C2 Phase A (centre)"])
-    b2 = np.array(dataDict["C2 Phase B (centre)"])
-    c2 = np.array(dataDict["C2 Phase C (centre)"])
         # calculations
     if N_circuit == 1:
         dist1 = norm(a1 - b1); dist2 = norm(b1 - c1); dist3 = norm(a1 - c1); 
@@ -72,7 +71,10 @@ def calculate(dataPath: str):
         h1 = norm(a1-ap); h2 = norm(b1-bp); h3 = norm(c1-cp)
         h12 = norm(a1-bp); h23 = norm(c1-bp); h13 = norm(cp-a1)
 
-    if N_circuit == 2:
+    elif N_circuit == 2:
+        a2 = np.array(dataDict["C2 Phase A (centre)"])
+        b2 = np.array(dataDict["C2 Phase B (centre)"])
+        c2 = np.array(dataDict["C2 Phase C (centre)"])
         # GMD calculation
         # red, yellow, purple colored lines in supplementary notes pic.
         red1 = norm(a1-b1); red2 = norm(a1-b2); red3 = norm(b1-a2); red4 = norm(a2-b2)

@@ -87,10 +87,7 @@ class myWindow(myWindowSkeleton):
         self.txt2jsonWindow = txt2json.txt2jsonWindow()
         self.txt2jsonWindow.show()
         self.txt2jsonWindow.sigCreated.connect(self.loadCbox)
-
-
-            
-
+        self.txt2jsonWindow.sigCreated.connect(self.calc)
 
 
 def app():

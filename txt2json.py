@@ -53,10 +53,16 @@ class txt2jsonWindow(myWindowSkeleton):
                 "Number of bundle conductors per phase": int(lines[7]),
                 "Bundle distance (m)": float(lines[9]),
                 "Length of the line (km)": float(lines[11]),
-                "ACSR conductor name": lines[13],
+                "ACSR conductor name": lines[13].strip(),
                 "C1 Phase C (centre)": [float(lines[15]), float(lines[16])],
                 "C1 Phase A (centre)": [float(lines[18]), float(lines[19])],
                 "C1 Phase B (centre)": [float(lines[21]), float(lines[22])],
+                # no need for placeholder. i fixed the calculator now
+                # # placeholder for 1 cct case to prevent calc from crashing
+                # # i will push 0 to those unnecessary areas
+                # "C2 Phase C (centre)": [0, 0],
+                # "C2 Phase A (centre)": [0, 0],
+                # "C2 Phase B (centre)": [0, 0],
             }
             if noc == 2:
                 dataDict.update({
@@ -74,7 +80,7 @@ class txt2jsonWindow(myWindowSkeleton):
             self.errorMessage(text=str(ex))
         else:
             self.infoMessage("Success", f"{filepathIn} saved successfully to file {filepathOut}")
-            self.sigCreated.emit(filepathOut)
+            self.sigCreated.emit(filenameOut)
 def app():
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle('Fusion')
