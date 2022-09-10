@@ -10,7 +10,7 @@ import re
 import datetime
 import sys
 
-DEBUG = True
+DEBUG = False
 DEFAULT_CBOX_TEXT = "Select Dataset"
 
 STYLESHEET_STR = """
