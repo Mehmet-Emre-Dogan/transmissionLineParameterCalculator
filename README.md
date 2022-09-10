@@ -74,13 +74,20 @@ Radius (GMR) of the line are found first.
 - If double circuits are used, they will have the same conductor types and length.
 
 # Coordinates
+<div align="center">
 
 ![tower](./pics/coor.png)
 
+</div>
+
 # Important Points in Calculation
+
+<div align="center">
 
 ![dcct](./pics/double_cct.png)
 
 ![dccte](./pics/double_cct_earth.png)
+
+</div>
 
 
