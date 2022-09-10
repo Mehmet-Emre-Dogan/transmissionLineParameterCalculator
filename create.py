@@ -68,12 +68,16 @@ class creatorWindow(myWindowSkeleton):
         self.ui.doubleSpinBoxB1y.setValue(datadict["C1 Phase B (centre)"][1])
         self.ui.doubleSpinBoxC1x.setValue(datadict["C1 Phase C (centre)"][0])
         self.ui.doubleSpinBoxC1y.setValue(datadict["C1 Phase C (centre)"][1])
-        self.ui.doubleSpinBoxA2x.setValue(datadict["C2 Phase A (centre)"][0])
-        self.ui.doubleSpinBoxA2y.setValue(datadict["C2 Phase A (centre)"][1])
-        self.ui.doubleSpinBoxB2x.setValue(datadict["C2 Phase B (centre)"][0])
-        self.ui.doubleSpinBoxB2y.setValue(datadict["C2 Phase B (centre)"][1])
-        self.ui.doubleSpinBoxC2x.setValue(datadict["C2 Phase C (centre)"][0])
-        self.ui.doubleSpinBoxC2y.setValue(datadict["C2 Phase C (centre)"][1])
+
+        if datadict["Number of circuits"] == 2:
+            self.ui.doubleSpinBoxA2x.setValue(datadict["C2 Phase A (centre)"][0])
+            self.ui.doubleSpinBoxA2y.setValue(datadict["C2 Phase A (centre)"][1])
+            self.ui.doubleSpinBoxB2x.setValue(datadict["C2 Phase B (centre)"][0])
+            self.ui.doubleSpinBoxB2y.setValue(datadict["C2 Phase B (centre)"][1])
+            self.ui.doubleSpinBoxC2x.setValue(datadict["C2 Phase C (centre)"][0])
+            self.ui.doubleSpinBoxC2y.setValue(datadict["C2 Phase C (centre)"][1])
+
+        self.setVisiblePhases()
 
     def save(self):
         if not self.ui.lineEditFileName.text():
