@@ -8,6 +8,7 @@ import os
 from json import load, dump
 import re
 import datetime
+import sys
 
 DEBUG = True
 DEFAULT_CBOX_TEXT = "Select Dataset"
@@ -54,7 +55,11 @@ QToolTip{
 }
 """
 
-currDirectory = os.path.dirname(__file__)
+# determine if application is a script file or frozen exe
+if getattr(sys, 'frozen', False):
+    currDirectory = os.path.dirname(sys.executable)
+elif __file__:
+    currDirectory = os.path.dirname(__file__)
 
 # https://stackoverflow.com/questions/4836710/is-there-a-built-in-function-for-string-natural-sort
 def naturalSort(arr: list) -> list: 
@@ -136,7 +141,11 @@ class myWindowSkeleton(QMainWindow):
 
     def getFilesDialog(self, title="Select files", path=None, filter="All files (*.*)"):
         if path == None:
-            path = os.path.dirname(__file__)
+            # determine if application is a script file or frozen exe
+            if getattr(sys, 'frozen', False):
+                path = os.path.dirname(sys.executable)
+            elif __file__:
+                path = os.path.dirname(__file__)
         fileDialog = QFileDialog()
         fileDialog.setFileMode(QFileDialog.ExistingFiles)
         fileList = fileDialog.getOpenFileNames(caption=title, directory=path, filter=filter)[0]

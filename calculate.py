@@ -7,9 +7,15 @@ import os
 from json import load
 from msvcrt import getch
 from functs import *
+import sys
 
 def calculate(dataPath: str):
-    currPath = os.path.dirname(__file__) # find the current directory
+    # find the current directory
+    # determine if application is a script file or frozen exe
+    if getattr(sys, 'frozen', False):
+        currPath = os.path.dirname(sys.executable)
+    elif __file__:
+        currPath = os.path.dirname(__file__)
     # Read the input data
     dataDict = {}
     with open(dataPath, 'r') as fptr:
@@ -133,7 +139,13 @@ def calculate(dataPath: str):
 if __name__ == "__main__":
     print("Standalone mode")
     files = []
-    currDirectory = os.path.dirname(__file__) # find the current directory
+    # find the current directory
+    # determine if application is a script file or frozen exe
+    if getattr(sys, 'frozen', False):
+        currDirectory = os.path.dirname(sys.executable)
+    elif __file__:
+        currDirectory = os.path.dirname(__file__)
+    
     for item in os.listdir(currDirectory):
         if item.endswith(".json") or item.endswith(".JSON"):
             files.append(item)

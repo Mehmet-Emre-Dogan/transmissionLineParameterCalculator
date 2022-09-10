@@ -6,8 +6,6 @@ import json2txt
 
 from guiFiles.mainGui import Ui_MainWindow as mainMainWindow
 
-currDirectory = os.path.dirname(__file__)
-
 class myWindow(myWindowSkeleton):
     def __init__(self):
         super(myWindow, self).__init__()
