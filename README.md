@@ -90,4 +90,18 @@ Radius (GMR) of the line are found first.
 
 </div>
 
+# Images
+
+<div align="center">
+
+![alt](./pics/SS.png)
+
+![alt](./pics/create.png)
+
+![alt](./pics/j2t.png)
+
+![alt](./pics/t2j.png)
+
+
+</div>
 
